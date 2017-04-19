@@ -119,6 +119,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
                 String speakerText = dataSnapshot.getValue().toString();
                 textSpeaker.speak(speakerText, TextToSpeech.QUEUE_FLUSH, null, null);
+                if(!textSpeaker.isSpeaking()){
+                actuatorRef.child("222").child("val").setValue("");}
 
             }
             @Override
@@ -185,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             mSensorList = mSensorManager.getSensorList(Sensor.TYPE_ALL);
 
-            sensorRef.setValue("");
+            //sensorRef.setValue("");
             for (int i=0;i<mSensorList.size();i++){
                 currentSensor= mSensorList.get(i);
                 sensorRef.child(Integer.toString(currentSensor.getType())).child("name").setValue(currentSensor.getName());
@@ -235,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-        DatabaseReference sensorValueRef  = sensorRef.child(Integer.toString(event.sensor.getType())).child("value");
+        DatabaseReference sensorValueRef  = sensorRef.child(Integer.toString(event.sensor.getType())).child("val");
         //if event holds only a single value update only value
         if(event.values.length ==1)
         {
