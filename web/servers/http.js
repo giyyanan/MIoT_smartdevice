@@ -33,9 +33,9 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
-app.use('/pi/actuators', actuatorsRoutes);
-app.use('/pi/sensors', sensorRoutes);
-app.use('/things', thingsRoutes);
+//app.use('/pi/actuators', actuatorsRoutes);
+//app.use('/pi/sensors', sensorRoutes);
+//app.use('/things', thingsRoutes);
 
 //link /smart/actuators(or)sensors to the new routes
 app.use('/smart/actuators',smart_actuators);

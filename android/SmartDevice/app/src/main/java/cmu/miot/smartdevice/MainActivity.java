@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             if (flashAvailable) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     actuatorRef.child("333").child("available").setValue(true);
-                    actuatorRef.child("333").child("value").setValue(false);
-                    actuatorRef.child("333").child("value").addValueEventListener(new ValueEventListener() {
+                    actuatorRef.child("333").child("val").setValue(false);
+                    actuatorRef.child("333").child("val").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             String command = dataSnapshot.getValue().toString();
@@ -112,8 +112,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
-        actuatorRef.child("222").child("value").setValue("");
-        actuatorRef.child("222").child("value").addValueEventListener(new ValueEventListener() {
+        actuatorRef.child("222").child("val").setValue("");
+        actuatorRef.child("222").child("val").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -132,8 +132,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         phoneVibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
             if(phoneVibrator.hasVibrator()){
                 actuatorRef.child("444").child("available").setValue(true);
-                actuatorRef.child("444").child("value").setValue(0);
-                actuatorRef.child("444").child("value").addValueEventListener(new ValueEventListener() {
+                actuatorRef.child("444").child("val").setValue(0);
+                actuatorRef.child("444").child("val").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String timeInterval = dataSnapshot.getValue().toString();
@@ -157,8 +157,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         if(welcome_text.isCursorVisible()){
             actuatorRef.child("111").child("available").setValue(true);
-            actuatorRef.child("111").child("value").setValue("white");
-            actuatorRef.child("111").child("value").addValueEventListener(new ValueEventListener() {
+            actuatorRef.child("111").child("val").setValue("white");
+            actuatorRef.child("111").child("val").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     String screenColor = dataSnapshot.getValue().toString();
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             for (int i=0;i<mSensorList.size();i++){
                 currentSensor= mSensorList.get(i);
                 sensorRef.child(Integer.toString(currentSensor.getType())).child("name").setValue(currentSensor.getName());
-                sensorRef.child(Integer.toString(currentSensor.getType())).child("value").setValue(0);
+                sensorRef.child(Integer.toString(currentSensor.getType())).child("val").setValue(0);
                 //Registerlistener for each sensor and fetch values at one second interval
                 //mSensorManager.registerListener(this,currentSensor,1000000);
 

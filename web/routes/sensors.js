@@ -51,6 +51,7 @@ router.route('/').get(function (req, res, next) {
   });
   	console.log(available_sensor_types);
   	res.send(sensor_data);
+
   });
   next();
   
