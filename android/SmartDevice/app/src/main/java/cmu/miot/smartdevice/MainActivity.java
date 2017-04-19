@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private Sensor currentSensor;
     List<Sensor> mSensorList;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,17 +36,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         testFirebase();
 
         //fetch sensor manager service
-        mSensorManager= (SensorManager) getSystemService(SENSOR_SERVICE);
+        this.mSensorManager= (SensorManager) getSystemService(SENSOR_SERVICE);
         //fetch all the available sensors
-        mSensorList = mSensorManager.getSensorList(Sensor.TYPE_ALL);
+        this.mSensorList = mSensorManager.getSensorList(Sensor.TYPE_ALL);
 
-        sensorRef.setValue("");
+        this.sensorRef.setValue("");
         for (int i=0;i<mSensorList.size();i++){
-            currentSensor= mSensorList.get(i);
-            sensorRef.child(Integer.toString(currentSensor.getType())).child("name").setValue(currentSensor.getName());
-            sensorRef.child(Integer.toString(currentSensor.getType())).child("value").setValue(0);
+            this.currentSensor= mSensorList.get(i);
+            this.sensorRef.child(Integer.toString(currentSensor.getType())).child("name").setValue(currentSensor.getName());
+            this.sensorRef.child(Integer.toString(currentSensor.getType())).child("value").setValue(0);
             //Registerlistener for each sensor and fetch values at one second interval
-            mSensorManager.registerListener(this,currentSensor,1000000);
+           // this.mSensorManager.registerListener(this,currentSensor,1000000);
 
         }
 
@@ -59,13 +58,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private void testFirebase(){
         final TextView welcome_text = (TextView) findViewById(R.id.welcome_text) ;
         try {
-            messageRef.setValue("Hello, World!");
-            messageRef = database.getReference("device");
+            this.messageRef.setValue("Hello, World!");
+            this.messageRef = database.getReference("device");
 
-            messageRef.setValue(Build.MODEL);
+            this.messageRef.setValue(Build.MODEL);
 
 
-            messageRef.addValueEventListener(new ValueEventListener() {
+            this.messageRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     // This method is called once with the initial value and again
@@ -89,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-        DatabaseReference sensorValueRef  = sensorRef.child(Integer.toString(currentSensor.getType())).child("value");
+        DatabaseReference sensorValueRef  = this.sensorRef.child(Integer.toString(this.currentSensor.getType())).child("value");
         //if event holds only a single value update only value
         if(event.values.length ==1)
         {
@@ -128,6 +127,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onPause() {
         super.onPause();
-        mSensorManager.unregisterListener(this);
+        this.mSensorManager.unregisterListener(this);
     }
 }
