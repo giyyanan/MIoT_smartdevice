@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "708415884606",
+    "firebase_url": "https://miot-smartdevice.firebaseio.com",
+    "project_id": "miot-smartdevice",
+    "storage_bucket": "miot-smartdevice.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:708415884606:android:aa1235810305d364",
+        "android_client_info": {
+          "package_name": "cmu.miot.smartdevice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "708415884606-gsg263u946gqeh8513sq0p97136fl9pn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cmu.miot.smartdevice",
+            "certificate_hash": "ecd643e5deb6cf27beed8c19f70198651f471f00"
+          }
+        },
+        {
+          "client_id": "708415884606-gf38guqjmgulbphjra3jvtpjoerolk2b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwNFNMRabn8EbIuNRwrxtn13pZezfKObA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "708415884606-gf38guqjmgulbphjra3jvtpjoerolk2b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
