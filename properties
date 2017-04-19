@@ -1,0 +1,14 @@
+
+<script src="https://www.gstatic.com/firebasejs/3.8.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBGsMEfEWNAlTxg_RKMT2hZM5nOj6wCC9g",
+    authDomain: "miot-smartdevice.firebaseapp.com",
+    databaseURL: "https://miot-smartdevice.firebaseio.com",
+    projectId: "miot-smartdevice",
+    storageBucket: "miot-smartdevice.appspot.com",
+    messagingSenderId: "708415884606"
+  };
+  firebase.initializeApp(config);
+</script>
