@@ -41,11 +41,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //fetch all the available sensors
         mSensorList = mSensorManager.getSensorList(Sensor.TYPE_ALL);
 
-
+        sensorRef.setValue("");
         for (int i=0;i<mSensorList.size();i++){
             currentSensor= mSensorList.get(i);
-            sensorRef.child(currentSensor.getName()).child("type").setValue(currentSensor.getType());
-            sensorRef.child(currentSensor.getName()).child("value").setValue(0);
+            sensorRef.child(Integer.toString(currentSensor.getType())).child("name").setValue(currentSensor.getName());
+            sensorRef.child(Integer.toString(currentSensor.getType())).child("value").setValue(0);
+            //Registerlistener for each sensor and fetch values at one second interval
             mSensorManager.registerListener(this,currentSensor,1000000);
 
         }
@@ -88,20 +89,28 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent event) {
 
+        DatabaseReference sensorValueRef  = sensorRef.child(Integer.toString(currentSensor.getType())).child("value");
+        //if event holds only a single value update only value
         if(event.values.length ==1)
         {
-            sensorRef.child(event.sensor.getName()).child("value").setValue(event.values[0]);
+            sensorValueRef.setValue(event.values[0]);
+        }
+        //if event holds more than one value update only value with x,y,(z)
+        if(event.values.length ==2)
+        {
+            sensorValueRef.child("x").setValue(event.values[0]);
+            sensorValueRef.child("y").setValue(event.values[1]);
         }
         if(event.values.length ==3)
         {
-            sensorRef.child(event.sensor.getName()).child("value").child("x").setValue(event.values[0]);
-            sensorRef.child(event.sensor.getName()).child("value").child("y").setValue(event.values[1]);
-        }
-        if(event.values.length ==3)
-        {
-            sensorRef.child(event.sensor.getName()).child("value").child("x").setValue(event.values[0]);
-            sensorRef.child(event.sensor.getName()).child("value").child("y").setValue(event.values[1]);
-            sensorRef.child(event.sensor.getName()).child("value").child("z").setValue(event.values[2]);
+            if(event.values[1]==0 && event.values[2]==0){
+                sensorValueRef.setValue(event.values[0]);
+            }
+            else {
+                sensorValueRef.child("x").setValue(event.values[0]);
+                sensorValueRef.child("y").setValue(event.values[1]);
+                sensorValueRef.child("z").setValue(event.values[2]);
+            }
         }
 
     }
@@ -113,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onResume() {
         super.onResume();
-        mSensorManager.registerListener(this, currentSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        //mSensorManager.registerListener(this, currentSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
