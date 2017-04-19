@@ -131,15 +131,16 @@ router.route('/:actuator/:value').get(function (req, res, next) {
 			
 
 			if(available_actuator_types.hasOwnProperty(actuator_type)){
-				console.log(req)
+				//console.log(req)
 				database.ref("actuators"+"/"+actuator_type)
 				.set({"val":req.params.value,"available":true})
 				.then(function() {
-					database.ref("actuators"+"/"+actuator_type).once("value")
-					.then(function(snapshot) {
-					var data = snapshot;
+					return database.ref("actuators"+"/"+actuator_type).once("value");
+				})
+				.then(function(snapshot) {
+					var data = snapshot.val();
+					console.log(data)
 					res.send(data);
-				});
 				});
 				
 
@@ -158,7 +159,7 @@ router.route('/:actuator/:value').get(function (req, res, next) {
 					return database.ref("actuators"+"/"+actuator_type).once("value");
 				})
 				.then(function(snapshot) {
-					var data = snapshot;
+					var data = snapshot.val();
 					res.send(data);
 				});
 

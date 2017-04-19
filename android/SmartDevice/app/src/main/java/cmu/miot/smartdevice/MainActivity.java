@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             //DatabaseReference flashActuator = actuatorRef.
             if (flashAvailable) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    actuatorRef.child("333").child("available").setValue(true);
+                    actuatorRef.child("333").child("available").setValue("off");
                     actuatorRef.child("333").child("val").setValue(false);
                     actuatorRef.child("333").child("val").addValueEventListener(new ValueEventListener() {
                         @Override
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                             String command = dataSnapshot.getValue().toString();
 
                                 try {
-                                    if (command.equals("true")) {
+                                    if (command.equals("on")) {
                                     mCameraManager.setTorchMode("0",true);}
                                     else {
                                         mCameraManager.setTorchMode("0",false);
@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 sensorRef.child(Integer.toString(currentSensor.getType())).child("name").setValue(currentSensor.getName());
                 sensorRef.child(Integer.toString(currentSensor.getType())).child("val").setValue(0);
                 //Registerlistener for each sensor and fetch values at one second interval
-                //mSensorManager.registerListener(this,currentSensor,1000000);
+                mSensorManager.registerListener(this,mSensorList.get(i),1000000);
 
             }
         }
@@ -235,7 +235,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-        DatabaseReference sensorValueRef  = sensorRef.child(Integer.toString(currentSensor.getType())).child("value");
+        DatabaseReference sensorValueRef  = sensorRef.child(Integer.toString(event.sensor.getType())).child("value");
         //if event holds only a single value update only value
         if(event.values.length ==1)
         {
@@ -268,7 +268,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onResume() {
         super.onResume();
-        //mSensorManager.registerListener(this, currentSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        mSensorList = mSensorManager.getSensorList(Sensor.TYPE_ALL);
+
+        sensorRef.setValue("");
+        for (int i=0;i<mSensorList.size();i++){
+            currentSensor= mSensorList.get(i);
+            sensorRef.child(Integer.toString(currentSensor.getType())).child("name").setValue(currentSensor.getName());
+            sensorRef.child(Integer.toString(currentSensor.getType())).child("val").setValue(0);
+            //Registerlistener for each sensor and fetch values at one second interval
+            mSensorManager.registerListener(this,mSensorList.get(i),1000000);
+
+        }
     }
 
     @Override
